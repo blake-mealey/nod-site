@@ -1,0 +1,41 @@
+.topbar {
+  display: table;
+  height: 100px;
+  width: 100%;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.52); }
+  .topbar .nod {
+    font-size: 50px;
+    display: table-cell;
+    vertical-align: middle; }
+  .topbar a {
+    display: table-cell;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 20px;
+    color: #000;
+    margin-left: 30px; }
+  .topbar .username {
+    float: right;
+    display: table;
+    height: 100%;
+    margin-right: 10px; }
+    .topbar .username a {
+      display: table-cell;
+      vertical-align: middle;
+      font-size: 15px; }
+    .topbar .username .avatar {
+      display: table-cell;
+      vertical-align: middle; }
+      .topbar .username .avatar img {
+        width: 30px;
+        height: 30px;
+        border-color: #eeeeee;
+        border-width: 2px;
+        border-radius: 30px;
+        border-style: solid;
+        background-color: #ffffff; }
+
+/*# sourceMappingURL=topbar.css.map */

@@ -1,4 +1,5 @@
 body {
+  background-color: #eeeeee;
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
@@ -15,6 +16,6 @@ a {
   text-decoration: none; }
 
 .button-highlight {
-  background-color: #2196F3; }
+  background-color: #1e88e5; }
 
 /*# sourceMappingURL=style.css.map */
