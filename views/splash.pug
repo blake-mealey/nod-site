@@ -3,18 +3,14 @@ extends layout
 block head
     link(rel='stylesheet', href='/stylesheets/splash.css')
 
-block content
+block header
     .splash-header
         h1 Generate clean, summarized notes with the click of a button.
         a#signup(href='/signup') Sign up
 
+block content
     .login-box
         input.text-field(type='text' placeholder='email')
         input.text-field(type='password' placeholder='password')
 
         a.button(href='/mynotes') Log in
-
-
-
-
-
