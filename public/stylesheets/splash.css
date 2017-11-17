@@ -1,0 +1,18 @@
+.splash-header {
+  background-color: #BBB;
+  height: 350px;
+  margin-bottom: 30px; }
+  .splash-header h1 {
+    text-align: center;
+    margin: 0;
+    color: #FFF; }
+
+.login-box {
+  width: 200px;
+  margin: auto;
+  text-align: center;
+  padding: 10px; }
+  .login-box * {
+    margin-bottom: 20px; }
+
+/*# sourceMappingURL=splash.css.map */
