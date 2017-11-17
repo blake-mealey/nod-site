@@ -1,4 +1,14 @@
 extends layout
 
+block head
+    link(rel='stylesheet', href='/stylesheets/topbar.css')
+
 block header
-    h1 NOD LOGO
+    .topbar
+        a.nod NOD
+        a(href='/mynotes') My Notes
+        a(href='/note') New Note
+        .username
+            a(href='/settings') Username
+            span.avatar
+                img

@@ -1,13 +1,15 @@
+@import 'mixins'
 @import 'colors'
 @import 'fonts'
 
 body
+    background-color: $background-color
     padding: 0
     margin: 0
 a
     color: #00B7FF
 
-$button-padding-top: 5px
+$button-padding-top: 8px
 $button-padding-sides: 20px
 .button
     font-size: 15px
@@ -16,8 +18,29 @@ $button-padding-sides: 20px
     padding: $button-padding-top $button-padding-sides $button-padding-top $button-padding-sides
     border-radius: 100px
     text-decoration: none
+    font-weight: bold
 
 .button-highlight
     @extend .button
     background-color: $highlight-color
 
+.folder-section
+	width: 80%
+	margin-top: 25px
+	margin-left: 10%
+	*
+		margin-bottom: 10px
+		margin-right: 10px
+
+.folder
+	float: left
+	font-size: 15px
+	color: #000
+	background-color: $foreground-color
+	border-radius: 15px
+	text-decoration: none
+	font-weight: bold
+	+box-shadow(0px 0px 2px rgba(0,0,0,0.2))
+	height: 80px
+	width: 160px
+	padding: 10px
