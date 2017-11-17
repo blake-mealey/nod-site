@@ -1,3 +1,5 @@
+@import 'colors'
+
 body
     padding: 0
     margin: 0
@@ -6,9 +8,17 @@ body
 a
     color: #00B7FF
 
+$button-padding-top: 5px
+$button-padding-sides: 20px
 .button
     font-size: 15px
     color: #FFF
     background-color: #000
-    padding: 5px 10px 5px 10px
-    border-radius: 15px
+    padding: $button-padding-top $button-padding-sides $button-padding-top $button-padding-sides
+    border-radius: 100px
+    text-decoration: none
+
+.button-highlight
+    @extend .button
+    background-color: $highlight-color
+
