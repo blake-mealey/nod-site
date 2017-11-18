@@ -53,18 +53,17 @@ $(document).ready(function() {
 		});
 
 		var $name = $('<span>', {
-			class: 'hidden name',
+			class: 'name',
 			text: name
 		});
 
-		var $editor = $('<input>', {
-			class: 'editor',
-			type: 'text',
-			value: name
+		var $editor = $('<textarea>', {
+			class: 'hidden editor',
+			text: name
 		});
 
 		var $edit = $('<button>', {
-			class: 'hidden edit mdl-button mdl-js-button mdl-button--icon'
+			class: 'edit mdl-button mdl-js-button mdl-button--icon'
 		});
 
 		var $icon = $('<i>', {

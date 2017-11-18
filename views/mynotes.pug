@@ -10,7 +10,7 @@ block content
         each folder in folders
             .folder
                 span.name= folder.name
-                input.hidden.editor(type='text' value=folder.name)
+                textarea.hidden.editor= folder.name
                 button.edit.mdl-button.mdl-js-button.mdl-button--icon
                     i.material-icons mode_edit
                 .hidden.folder-items
