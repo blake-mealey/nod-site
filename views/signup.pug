@@ -5,12 +5,13 @@ block head
 
 block header
     .signup-header
-        h1 Sign Up for Free
+        h1 Sign up for Free
 
 block content
-    .signup-box
-        input.text-field(type='text' placeholder='email')
-        input.text-field(type='password' placeholder='password')
-        input.text-field(type='password' placeholder='confirm password')
-    .signup-button
-        a.button#sbutton(href='/mynotes') Sign Up
+    form#newuser(action='/newuser' method='post')
+        .signup-box
+            input.text-field(type='text' placeholder='email' name='email')
+            input.text-field(type='password' placeholder='password' name='password')
+            input.text-field(type='password' placeholder='confirm password' name='confirmedPassword')
+        .signup-button
+            a.button(href='javascript:{}' onclick="document.getElementById('newuser').submit(); return false;") Sign up

@@ -83,7 +83,7 @@ router.post('/login', function(req, res, next) {
 
 /* POST request to create a new user */
 router.post('/newuser', function(req, res, next) {
-	if (req.body.email && req.body.password) {
+	if (req.body.email && req.body.password && req.body.confirmedPassword && req.body.password === req.body.confirmedPassword) {
 		var userData = {
 			email: req.body.email,
 			password: req.body.password
@@ -101,7 +101,8 @@ router.get('/logout', function(req, res, next) {
 	if (req.session) {
 		req.session.destroy(function(err) {
 			if (err) return next(err);
-			return res.redirect('/');
+			req.session.userId = user._id;
+			return res.redirect('/mynotes');
 		});
 	}
 });
