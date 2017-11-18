@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
+var session = require('express-session')
 
 var index = require('./routes/index');
 
@@ -25,6 +26,11 @@ app.use(sassMiddleware({
   dest: path.join(__dirname, 'public'),
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
+}));
+app.use(session({
+  secret: 'such secret',
+  resave: true,
+  saveUninitialized: false
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 

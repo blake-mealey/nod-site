@@ -4,7 +4,7 @@ block head
     script(type='text/javascript' src='javascripts/mynotes.js')
 
 block content
-    a(style={'margin-left': '10%'}).button-highlight(href='/signup') New Folder
+    a(style={'margin-left': '10%'} href='/signup').button-highlight New Folder
     .folder-section
         each folder in folders
             .folder= folder.name

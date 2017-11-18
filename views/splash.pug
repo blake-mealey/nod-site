@@ -6,12 +6,12 @@ block head
 block header
     .splash-header
         h1 Generate clean, summarized notes with the click of a button.
-        img#logo(src='/images/whitepencil.png' alt='NOD Logo' style='width:80px;height:56px' align='left')
+        img#logo(src='images/logo-light.svg' alt='NOD Logo' align='left')
         a#signup(href='/signup') Sign up
 
 block content
     .login-box
-        input.text-field(type='text' placeholder='email')
-        input.text-field(type='password' placeholder='password')
-
-        a.button(href='/mynotes') Log in
+        form#login(action='/login' method='post')
+            input.text-field(type='text' placeholder='email' name='email')
+            input.text-field(type='password' placeholder='password' name='password')
+            a.button(href='javascript:{}' onclick="document.getElementById('login').submit(); return false;") Log in
