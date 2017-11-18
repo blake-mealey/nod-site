@@ -4,7 +4,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/nod');
 
-var User = require('../schemas/User.js')
+var User = require('../schemas/User.js');
+var Folder = require('../schemas/Folder.js');
+var Note = require('../schemas/Note.js');
 
 // Connect to db
 var db = mongoose.connection;
@@ -38,53 +40,12 @@ router.get('/signup', function(req, res, next) {
 router.get('/mynotes', requiresLogin, function(req, res, next) {
 	User.fromId(req.session.userId, function(err, user) {
 		if (err) return next(err);
-		var notes = [
-			{
-				name: 'Note 4',
-				id: '3',
-				modified: 'Nov 2, 2017'
-			},
-			{
-				name: 'Note 3',
-				id: '2',
-				modified: 'Oct 31, 2017'
-			},
-			{
-				name: 'Note 2',
-				id: '1',
-				modified: 'Sep 15, 2017'
-			},
-			{
-				name: 'Note 1',
-				id: '0',
-				modified: 'Sep 5, 2017'
-			}
-		];
-		var folders = [
-			{
-				name: 'History Notes 1',
-				notes: notes
-			},
-			{
-				name: 'History Notes 2',
-				notes: notes
-			},
-			{
-				name: 'History Notes 3',
-				notes: notes
-			},
-			{
-				name: 'History Notes 4',
-				notes: notes
-			},
-			{
-				name: 'History Notes 5',
-				notes: notes
-			}
-		];
-		return res.render('mynotes', {
-			email: user.email,
-			folders: folders		// TODO: from db
+		Folder.fromUserId(user._id, function(err, folders) {
+			if (err) return next(err);
+			return res.render('mynotes', {
+				email: user.email,
+				folders: folders
+			});
 		});
 	});
 });
