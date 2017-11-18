@@ -1,4 +1,18 @@
 extends topbar
 
+block head
+    link(rel='stylesheet', href='/stylesheets/note.css')
+    //- script(type='text/javascript' src='javascripts/mynotes.js')
+
 block content
-    h1 Note
+    div.note-section
+        div.note-header
+            div.note-title.untitled Untitled
+            //- This needs yo be replaced with the folder symbol at a later date
+            div.folder-btn.material-icons.md-48 folder
+                    
+        div.note-controls
+            button.font-controls controls
+            button.record-btn Record
+        textarea.summary-text Summary Area
+        textarea.additional-text Additional Area
