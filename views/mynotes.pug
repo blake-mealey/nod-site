@@ -24,4 +24,4 @@ block content
                                 td.left
                                     a(href='/note?id=' + note.id)= note.name
                                 td.padding
-                                td.right= note.modified
+                                td.right= moment(note.modified).format('MMM Do YYYY, h:mm:ss a')

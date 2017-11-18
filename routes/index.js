@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var moment = require('moment');
+
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/nod');
@@ -41,7 +43,8 @@ router.get('/mynotes', requiresLogin, function(req, res, next) {
 		if (err) return next(err);
 		return res.render('mynotes', {
 			email: user.email,
-			folders: folders
+			folders: folders,
+			moment: moment
 		});
 	});
 });
@@ -49,9 +52,45 @@ router.get('/mynotes', requiresLogin, function(req, res, next) {
 /* GET request for note page */
 router.get('/note', requiresLogin, function(req, res, next) {
 	var user = req.session.user;
-	return res.render('note', {
-		email: user.email
-	});
+	if (req.query.new) {
+		var name = 'Untitled note';
+		var folderId = user.defaultFolderId;
+		Note.create({}, function(err, doc) {
+			if (err) return res.send({ ok: false, err: err });
+			var note = {
+				name: name,
+				id: doc._id
+			};
+			Folder.update({
+				_id: folderId
+			}, {
+				$push: { notes: note }
+			}, function(err) {
+				if (err) return res.redirect('/mynotes');
+				return res.redirect('/note?id=' + note.id);
+			});
+		});
+	} else if (req.query.id) {
+		Note.findById(req.query.id, function(err, note) {
+			if (err) return res.redirect('/mynotes');
+			Folder.findOne({
+				'notes.id': note._id
+			}, {
+				'notes.$': 1
+			}, function(err, folder) {
+				if (err) return res.redirect('/mynotes');
+				var internalNote = folder.notes[0];
+				internalNote.content = note.content;
+				console.log(internalNote);
+				return res.render('note', {
+					email: user.email,
+					note: internalNote
+				});
+			});
+		});
+	} else {
+		return res.redirect('/mynotes');
+	}
 });
 
 /* GET request for account settings page */
@@ -124,11 +163,11 @@ router.post('/folders/edit', requiresLogin, function(req, res, next) {
 		}, {
 			name: req.body.name
 		}, function(err) {
-			if (err) return res.send({ ok: false });
+			if (err) return res.send({ ok: false, err: err });
 			return res.send({ ok: true });
 		});
 	} else {
-		return res.send({ ok: false });
+		return res.send({ ok: false, err: 'missing_params' });
 	}
 });
 

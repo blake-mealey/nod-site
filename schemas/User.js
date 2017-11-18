@@ -16,6 +16,9 @@ var UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    defaultFolderId: {
+        type: Schema.Types.ObjectId
     }
 });
 
@@ -35,7 +38,14 @@ UserSchema.post('save', function(user) {
         userId: user._id,
         notes: []
     }, function(err, folder) {
-        return err;
+        if (err) return err;
+        User.update({
+            _id: user._id
+        }, {
+            defaultFolderId: folder._id
+        }, function(err) {
+            if (err) return err;
+        });
     });
 });
 
