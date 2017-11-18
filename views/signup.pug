@@ -1,4 +1,16 @@
 extends layout
 
+block head
+    link(rel='stylesheet', href='/stylesheets/signup.css')
+
+block header
+    .signup-header
+        h1 Sign Up for Free
+
 block content
-    h1 NOD Sign Up
+    .signup-box
+        input.text-field(type='text' placeholder='email')
+        input.text-field(type='password' placeholder='password')
+        input.text-field(type='password' placeholder='confirm password')
+    .signup-button
+        a.button#sbutton(href='/mynotes') Sign Up
