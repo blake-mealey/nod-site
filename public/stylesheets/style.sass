@@ -21,10 +21,14 @@ $button-padding-sides: 20px
     border-radius: 100px
     text-decoration: none
     font-weight: bold
+.button:hover
+	background-color: lighten(#000, 20)
 
 .button-highlight
     @extend .button
     background-color: $highlight-color
+.button-highlight:hover
+	background-color: lighten($highlight-color, 10)
 
 .folder-section
 	width: 80%
@@ -59,8 +63,6 @@ $folder-selected-border-diameter: 6px
 	border-color: $highlight-color
 	border-width: $folder-selected-border-radius
 	padding: $card-padding - $folder-selected-border-radius
-	/*width: $folder-width - $folder-selected-border-diameter*/
-	/*height: $folder-height - $folder-selected-border-diameter*/
 	.folder-items
 		width: calc(150% + $folder-selected-border-diameter)
 
