@@ -1,13 +1,18 @@
 extends topbar
 
 block head
+    link(rel='stylesheet', href='/stylesheets/folders.css')
     script(type='text/javascript' src='javascripts/mynotes.js')
 
 block content
-    a(style={'margin-left': '10%'} href='/signup').button-highlight New Folder
-    .folder-section
+    a(style={'margin-left': '10%'}).button-highlight#new-folder New Folder
+    .folder-section#folders
         each folder in folders
-            .folder= folder.name
+            .folder
+                span.name= folder.name
+                input.hidden.editor(type='text' value=folder.name)
+                button.edit.mdl-button.mdl-js-button.mdl-button--icon
+                    i.material-icons mode_edit
                 .hidden.folder-items
                     table
                         tr.headers
