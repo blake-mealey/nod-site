@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/nod');
 
 var User = require('../schemas/User.js');

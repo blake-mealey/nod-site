@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
 
 var bcrypt = require('bcrypt');
@@ -20,9 +21,10 @@ var UserSchema = new Schema({
 
 // From https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 UserSchema.pre('save', function(next) {         // Note: Useless without https
-    bcrypt.hash(this.password, 10, function(err, hash) {
+    var user = this;
+    bcrypt.hash(user.password, 10, function(err, hash) {
         if(err) return next(err);
-        this.password = hash;
+        user.password = hash;
         return next();
     });
 });
@@ -51,7 +53,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
                 if (result === true) {
                     return callback(null, user);
                 } else {
-                    var err = new Error('Wrong username.');
+                    var err = new Error('Wrong email or password.');
                     return callback(err);
                 }
             });
