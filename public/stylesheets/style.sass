@@ -1,6 +1,8 @@
 @import 'mixins'
 @import 'colors'
 
+@import 'topbar'
+
 body
     background-color: $background-color
     padding: 0
@@ -29,19 +31,64 @@ $button-padding-sides: 20px
 	width: 80%
 	margin-top: 25px
 	margin-left: 10%
-	*
-		margin-bottom: 10px
-		margin-right: 10px
 
-.folder
-	float: left
+$card-padding: 10px
+.card
 	font-size: 15px
 	color: #000
 	background-color: $foreground-color
 	border-radius: 15px
-	text-decoration: none
-	font-weight: bold
 	+box-shadow(0px 0px 2px rgba(0,0,0,0.2))
-	height: 80px
-	width: 160px
-	padding: 10px
+	padding: $card-padding
+
+$folder-width: 160px
+$folder-height: 80px
+.folder
+	@extend .card
+	font-weight: bold
+	margin-bottom: 40px
+	margin-right: 10px
+	float: left
+	width: $folder-width
+	height: $folder-height
+	position: relative
+
+$folder-selected-border-radius: 3px
+$folder-selected-border-diameter: 6px
+.folder:hover
+	border-style: solid
+	border-color: $highlight-color
+	border-width: $folder-selected-border-radius
+	padding: $card-padding - $folder-selected-border-radius
+	/*width: $folder-width - $folder-selected-border-diameter*/
+	/*height: $folder-height - $folder-selected-border-diameter*/
+	.folder-items
+		width: calc(150% + $folder-selected-border-diameter)
+
+.folder-items
+	@extend .card
+	padding: $card-padding
+	border-radius: 5px
+	font-weight: normal
+	position: absolute
+	margin-left: -10px
+	width: 150%
+	top: calc(100% + 10px)
+	z-index: 10
+	border-style: solid
+	border-color: $highlight-color
+	border-width: $folder-selected-border-radius
+	.headers
+		opacity: 0.5
+	.right
+		text-align: right
+	.padding
+		padding-left: 20px
+	table
+		width: 100%
+	a
+		text-decoration: none
+		color: black
+
+.hidden
+	visibility: hidden

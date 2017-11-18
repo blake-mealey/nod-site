@@ -1,14 +1,22 @@
 extends topbar
 
+block head
+    script(type='text/javascript' src='javascripts/mynotes.js')
+
 block content
     a(style={'margin-left': '10%'}).button-highlight(href='/signup') New Folder
-    div.folder-section
-        div.folder History Notes
-        div.folder History Notes
-        div.folder History Notes
-        div.folder History Notes
-        div.folder History Notes
-        div.folder History Notes
-        div.folder History Notes longer name for testing
-        div.folder History Notes
-        div.folder History Notes
+    .folder-section
+        each folder in folders
+            .folder= folder.name
+                .hidden.folder-items
+                    table
+                        tr.headers
+                            td.left Name
+                            td.padding
+                            td.right Last Modified
+                        each note in folder.notes
+                            tr
+                                td.left
+                                    a(href='/note?id=' + note.id)= note.name
+                                td.padding
+                                td.right= note.modified
