@@ -15,14 +15,11 @@ db.once('open', function() {		// Test DB connection
 	console.log('Connected successfully!');
 });
 
-// Middleware function to require a session user id to load the page
+// Middleware function to require a session user to load the page
 // Renders 'require-login' if not logged in
 function requiresLogin(req, res, next) {
-	if (req.session && req.session.userId) {
-		return next();
-	} else {
-		return res.render('require-login');
-	}
+	if (req.session && req.session.user) return next();
+	return res.render('require-login');
 }
 
 /* GET request for splash/login page */
@@ -38,35 +35,29 @@ router.get('/signup', function(req, res, next) {
 
 /* GET request for My Notes page */
 router.get('/mynotes', requiresLogin, function(req, res, next) {
-	User.fromId(req.session.userId, function(err, user) {
+	var user = req.session.user;
+	Folder.fromUserId(user._id, function(err, folders) {
 		if (err) return next(err);
-		Folder.fromUserId(user._id, function(err, folders) {
-			if (err) return next(err);
-			return res.render('mynotes', {
-				email: user.email,
-				folders: folders
-			});
+		return res.render('mynotes', {
+			email: user.email,
+			folders: folders
 		});
 	});
 });
 
 /* GET request for note page */
 router.get('/note', requiresLogin, function(req, res, next) {
-	User.fromId(req.session.userId, function(err, user) {
-		if (err) return next(err);
-		return res.render('note', {
-			email: user.email
-		});
+	var user = req.session.user;
+	return res.render('note', {
+		email: user.email
 	});
 });
 
 /* GET request for account settings page */
 router.get('/settings', requiresLogin, function(req, res, next) {
-	User.fromId(req.session.userId, function(err, user) {
-		if (err) return next(err);
-		return res.render('settings', {
-			email: user.email
-		});
+	var user = req.session.user;
+	return res.render('settings', {
+		email: user.email
 	});
 });
 
@@ -75,7 +66,7 @@ router.post('/login', function(req, res, next) {
 	if (req.body.email && req.body.password) {
 		User.authenticate(req.body.email, req.body.password, function(err, user) {
 			if (err) return next(err);
-			req.session.userId = user._id;
+			req.session.user = user;
 			return res.redirect('/mynotes');
 		});
 	}
@@ -84,14 +75,13 @@ router.post('/login', function(req, res, next) {
 /* POST request to create a new user */
 router.post('/newuser', function(req, res, next) {
 	if (req.body.email && req.body.password && req.body.confirmedPassword && req.body.password === req.body.confirmedPassword) {
-		var userData = {
+		User.create({
 			email: req.body.email,
 			password: req.body.password
-		};
-
-		User.create(userData, function(err, user) {
+		}, function(err, user) {
 			if (err) return next(err);
-			return res.redirect('/');
+			req.session.user = user;
+			return res.redirect('/mynotes');
 		});
 	}
 });
@@ -101,8 +91,7 @@ router.get('/logout', function(req, res, next) {
 	if (req.session) {
 		req.session.destroy(function(err) {
 			if (err) return next(err);
-			req.session.userId = user._id;
-			return res.redirect('/mynotes');
+			return res.redirect('/');
 		});
 	}
 });

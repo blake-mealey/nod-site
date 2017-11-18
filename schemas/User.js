@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 
 var bcrypt = require('bcrypt');
 
+var Folder = require('./Folder.js');
+
 var UserSchema = new Schema({
     email: {
         type: String,
@@ -18,11 +20,20 @@ var UserSchema = new Schema({
 
 // From https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 UserSchema.pre('save', function(next) {         // Note: Useless without https
-    var user = this;
     bcrypt.hash(this.password, 10, function(err, hash) {
         if(err) return next(err);
-        user.password = hash;
+        this.password = hash;
         return next();
+    });
+});
+
+UserSchema.post('save', function(user) {
+    Folder.create({
+        name: "Default Folder",
+        userId: user._id,
+        notes: []
+    }, function(err, folder) {
+        return err;
     });
 });
 
