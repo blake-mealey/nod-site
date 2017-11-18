@@ -63,7 +63,7 @@ router.get('/settings', requiresLogin, function(req, res, next) {
 });
 
 /* POST request to login */
-router.post('/login', function(req, res, next) {
+router.post('/users/login', function(req, res, next) {
 	if (req.body.email && req.body.password) {
 		User.authenticate(req.body.email, req.body.password, function(err, user) {
 			if (err) return next(err);
@@ -74,7 +74,7 @@ router.post('/login', function(req, res, next) {
 });
 
 /* POST request to create a new user */
-router.post('/newuser', function(req, res, next) {
+router.post('/users/new', function(req, res, next) {
 	if (req.body.email && req.body.password && req.body.confirmedPassword && req.body.password === req.body.confirmedPassword) {
 		User.create({
 			email: req.body.email,
@@ -88,12 +88,47 @@ router.post('/newuser', function(req, res, next) {
 });
 
 /* GET request to logout */
-router.get('/logout', function(req, res, next) {
+router.get('/users/logout', function(req, res, next) {
 	if (req.session) {
 		req.session.destroy(function(err) {
 			if (err) return next(err);
 			return res.redirect('/');
 		});
+	}
+});
+
+/* POST request to create a new folder */
+router.post('/folders/new', requiresLogin, function(req, res, next) {
+	var user = req.session.user;
+	console.log(req.body);
+	if (req.body.name) {
+		Folder.create({
+			name: req.body.name,
+			userId: user._id,
+			notes: []
+		}, function(err, folder) {
+			if (err) return res.send({ ok: false, err: err });
+			return res.send({ ok: true, id: folder._id });
+		});
+	} else {
+		return res.send({ ok: false, err: 'missing_params' });
+	}
+});
+
+/* POST request to edit an existing folder */
+router.post('/folders/edit', requiresLogin, function(req, res, next) {
+	var user = req.session.user;
+	if (req.body.id && req.body.name) {
+		Folder.update({
+			_id: req.body.id
+		}, {
+			name: req.body.name
+		}, function(err) {
+			if (err) return res.send({ ok: false });
+			return res.send({ ok: true });
+		});
+	} else {
+		return res.send({ ok: false });
 	}
 });
 

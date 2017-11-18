@@ -9,7 +9,6 @@ var InternalNoteSchema = new Schema({
     },
     id: {
         type: Schema.Types.ObjectId,
-        unique: true,
         required: true
     },
     modified: {
@@ -26,7 +25,6 @@ var FolderSchema = new Schema({
     },
     userId: {
         type: Schema.Types.ObjectId,
-        unique: true,
         required: true
     },
     notes: [InternalNoteSchema]

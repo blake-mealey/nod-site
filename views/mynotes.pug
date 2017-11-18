@@ -8,7 +8,7 @@ block content
     a(style={'margin-left': '10%'}).button-highlight#new-folder New Folder
     .folder-section#folders
         each folder in folders
-            .folder
+            .folder(data-id=folder._id)
                 span.name= folder.name
                 textarea.hidden.editor= folder.name
                 button.edit.mdl-button.mdl-js-button.mdl-button--icon

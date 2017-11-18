@@ -11,7 +11,7 @@ block header
 
 block content
     .login-box
-        form#login(action='/login' method='post')
+        form#login(action='/users/login' method='post')
             input.text-field(type='text' placeholder='email' name='email')
             input.text-field(type='password' placeholder='password' name='password')
             a.button(href='javascript:{}' onclick="document.getElementById('login').submit(); return false;") Log in
