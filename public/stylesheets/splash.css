@@ -1,0 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+body {
+  font-family: "Helvetica", sans-serif; }
+
+.splash-header {
+  text-align: center;
+  display: table;
+  width: 100%;
+  background-image: url(/images/bg.jpg);
+  background-size: cover;
+  height: 350px;
+  margin-bottom: 30px; }
+  .splash-header h1 {
+    font-family: "Slabo 27px", serif;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    color: #FFF; }
+  .splash-header #signup {
+    color: #FFF;
+    text-decoration: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px; }
+  .splash-header #logo {
+    position: absolute;
+    top: 30px;
+    left: 30px; }
+
+.login-box {
+  width: 200px;
+  margin: auto;
+  text-align: center;
+  padding: 10px; }
+  .login-box * {
+    margin-bottom: 20px;
+    width: 100%; }
+
+/*# sourceMappingURL=splash.css.map */
