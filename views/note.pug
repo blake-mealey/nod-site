@@ -3,6 +3,8 @@ extends topbar
 block head
     link(rel='stylesheet', href='/stylesheets/note.css')
     script(type='text/javascript' src='javascripts/note.js')
+    script(type='text/javascript' src='plugin/tinymce/tinymce.min.js')
+    script(type='text/javascript' src='plugin/tinymce/init-tinymce.js')
 
 block content
     #note-data(data-id=note.id)
@@ -24,4 +26,4 @@ block content
             button.font-controls controls
             button.record-btn Record
         textarea.summary-text Summary Area
-        textarea.additional-text Additional Area
+        textarea.tinymce
