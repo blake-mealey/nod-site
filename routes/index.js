@@ -79,9 +79,8 @@ router.get('/note', requiresLogin, function(req, res, next) {
 				'notes.$': 1
 			}, function(err, folder) {
 				if (err) return res.redirect('/mynotes');
-				var internalNote = folder.notes[0];
+				var internalNote = folder.notes[0].toObject();
 				internalNote.content = note.content;
-				console.log(internalNote);
 				return res.render('note', {
 					email: user.email,
 					note: internalNote
@@ -163,6 +162,24 @@ router.post('/folders/edit', requiresLogin, function(req, res, next) {
 		}, {
 			name: req.body.name
 		}, function(err) {
+			if (err) return res.send({ ok: false, err: err });
+			return res.send({ ok: true });
+		});
+	} else {
+		return res.send({ ok: false, err: 'missing_params' });
+	}
+});
+
+router.post('/notes/edit-name', requiresLogin, function(req, res, next) {
+	var user = req.session.user;
+	if (req.body.id && req.body.name) {
+		Folder.findOneAndUpdate({
+			'notes.id': req.body.id
+		}, {
+			$set: {
+				'notes.$.name': req.body.name
+			}
+		}, function(err, folder) {
 			if (err) return res.send({ ok: false, err: err });
 			return res.send({ ok: true });
 		});

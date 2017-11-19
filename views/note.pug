@@ -2,16 +2,25 @@ extends topbar
 
 block head
     link(rel='stylesheet', href='/stylesheets/note.css')
-    //- script(type='text/javascript' src='javascripts/mynotes.js')
+    script(type='text/javascript' src='javascripts/note.js')
 
 block content
-    div.note-section
-        div.note-header
-            div.note-title.untitled= note.name
-            //- This needs yo be replaced with the folder symbol at a later date
-            div.folder-btn.material-icons.md-48 folder
-                    
-        div.note-controls
+    #note-data(data-id=note.id)
+    .note-section
+        .note-header
+            span#note-title(class=(note.name=='Untitled note') && 'untitled')= note.name
+            input#note-title-editor.hidden(type='text' value=note.name)
+            .folder-btn.material-icons.md-48 folder
+                .move-folder.hidden
+                    table
+                        tr.headers
+                            td.left Move
+                        //- each folder in folders
+                            tr
+                                td.left
+                                    a(href='/note?id=' + note.id)= note.name
+
+        .note-controls
             button.font-controls controls
             button.record-btn Record
         textarea.summary-text Summary Area

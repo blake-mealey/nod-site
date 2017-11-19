@@ -31,7 +31,10 @@ function openFolderEditor(e) {
 		$editor.unbind('focusout');
 		$editor.unbind('keypress');
 
-		$.post('./folders/edit', { id: $folder.attr('data-id'), name: newName }, function(res) {
+		$.post('./folders/edit', {
+			id: $folder.attr('data-id'),
+			name: newName
+		}, function(res) {
 			if (!res.ok) {
 				$name.text(lastName);
 				$editor.val(lastName);
@@ -41,8 +44,7 @@ function openFolderEditor(e) {
 
 	$editor.focusout(closeFolderEditor);
 	$editor.keypress(function(e) {
-		var key = e.which;
-		if (key == 13) {		// enter keycode
+		if (e.which == 13) {
 			closeFolderEditor();
 		}
 	});
@@ -116,7 +118,9 @@ $(document).ready(function() {
 
 	$('#new-folder').click(function() {
 		var name = 'New Folder';
-		$.post('/folders/new', { name: name }, function(res) {
+		$.post('/folders/new', {
+			name: name
+		}, function(res) {
 			console.log(res);
 			if (res.ok) {
 				$folder = makeFolder(name);
