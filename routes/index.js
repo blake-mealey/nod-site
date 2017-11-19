@@ -65,7 +65,6 @@ router.get('/note', requiresLogin, function(req, res, next) {
 				$push: { notes: note }
 			}, function(err, updatedFolder) {
 				if (err) return res.redirect('/mynotes');
-				console.warn(updatedFolder);
 				return res.redirect('/note?id=' + note.id);
 			});
 		});
@@ -78,7 +77,6 @@ router.get('/note', requiresLogin, function(req, res, next) {
 				'notes.$': 1
 			}, function(err, folder) {
 				if (err) return res.redirect('/mynotes');
-				console.warn(folder);
 				var internalNote = folder.notes[0].toObject();
 				internalNote.content = note.content;
 				return res.render('note', {
@@ -118,9 +116,22 @@ router.post('/users/new', function(req, res, next) {
 			email: req.body.email,
 			password: req.body.password
 		}, function(err, user) {
-			if (err) return next(err);
-			req.session.user = user;
-			return res.redirect('/mynotes');
+			Folder.create({
+				name: "Default Folder",
+				userId: user._id,
+				notes: []
+			}, function (err, folder) {
+				if (err) return err;
+				User.findByIdAndUpdate(user._id,
+					{
+						defaultFolderId: folder._id
+					}, function (err, updatedUser) {
+						if (err) return err;
+						req.session.user = updatedUser;
+						req.session.user.defaultFolderId = folder._id;
+						return res.redirect('/mynotes');
+				});
+			});
 		});
 	}
 });
