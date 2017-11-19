@@ -4,15 +4,19 @@ body {
 
 .signup-header {
   text-align: center;
-  display: table;
-  width: 100%;
-  margin-top: 200px; }
+  display: block;
+  width: 100%; }
   .signup-header h1 {
     font-family: "Slabo 27px", serif;
-    display: table-cell;
+    font-size: 40px;
     vertical-align: middle;
-    margin: 0;
-    padding: 80px; }
+    letter-spacing: .5px;
+    margin: auto;
+    margin-bottom: 15px;
+    padding: 10px; }
+  .signup-header #logo {
+    margin: auto;
+    margin-top: 200px; }
 
 .signup-box {
   width: 200px;
@@ -26,5 +30,9 @@ body {
   margin: auto;
   text-align: center;
   padding: 40px; }
+
+.footer {
+  margin: auto;
+  text-align: center; }
 
 /*# sourceMappingURL=signup.css.map */
