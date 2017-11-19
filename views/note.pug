@@ -22,7 +22,9 @@ block content
                                 td.left
                                     a.move-folder(data-id=folder._id)= folder.name
 
-        .note-controls
-            button#record-btn.record-btn Record
+        .record-controls
+            label#record-text.record-btn Start/Stop Recording
+                div#start-record-btn.deactivated.material-icons.md-48 mic
+                div#stop-record-btn.activated.hidden.material-icons.md-48 mic
         textarea#summary.summary-text Summary Area
         textarea.tinymce

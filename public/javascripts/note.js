@@ -95,6 +95,7 @@ $(document).ready(function() {
         recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = false;
+        recognition.lang = 'English';
 
         recognition.onresult = function (event) {
             var interim_transcript = '';
@@ -114,13 +115,19 @@ $(document).ready(function() {
         }
     };
 
-    $('#record-btn').click(function () {
+    $('#start-record-btn').click(function () {
         if (recognition) {
-            console.warn("Starting recording!!!");
-            recognition.lang = 'English';
             recognition.start();
-        } else {
-            console.error("CANT RECORD!!!");
         }
+        $('#start-record-btn').addClass('hidden');
+        $('#stop-record-btn').removeClass('hidden');
+    });
+
+    $('#stop-record-btn').click(function () {
+        if (recognition) {
+            recognition.stop();
+        }
+        $('#stop-record-btn').addClass('hidden');
+        $('#start-record-btn').removeClass('hidden');
     });
 });

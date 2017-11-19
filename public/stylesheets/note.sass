@@ -26,12 +26,26 @@
         .untitled
             font-style: italic
             opacity: 0.5
-    .note-controls
+
+    .record-controls
         width: 100%
-        .font-controls
-            float: left
-        .record-btn
+        label
             float: right
+            .deactivated
+                margin-top: -15px
+                float: right
+                color: #666
+                cursor: pointer
+                font-size: 40px
+                &:hover
+                    color: $highlight-color
+            .activated
+                margin-top: -15px
+                float: right
+                color: #c31717
+                cursor: pointer
+                font-size: 40px
+
     .summary-text
         margin-top: 20px
         margin-bottom: 0px
