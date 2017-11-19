@@ -87,7 +87,7 @@ function makeFolder(name) {
 	});
 
 	var $items = $('<div>', {
-		class: 'folder-items hidden'
+		class: 'folder-items'
 	});
 
 	var $table = $('<table>');
