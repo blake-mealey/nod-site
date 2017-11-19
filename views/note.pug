@@ -17,10 +17,10 @@ block content
                     table
                         tr.headers
                             td.left Move
-                        //- each folder in folders
+                        each folder in folders
                             tr
                                 td.left
-                                    a(href='/note?id=' + note.id)= note.name
+                                    a.move-folder(data-id=folder._id)= folder.name
 
         .note-controls
             button.font-controls controls

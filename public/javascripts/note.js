@@ -74,4 +74,13 @@ $(document).ready(function() {
     $noteData = $('#note-data');
 
     $('#move-btn').each(initMoveButton);
+
+    $('.move-folder').click(function() {
+        $.post('/notes/move-folder', {
+            noteId: $noteData.attr('data-id'),
+            folderId: $(this).attr('data-id')
+        }, function(res) {
+            console.log(res);
+        });
+    });
 });
