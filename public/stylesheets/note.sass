@@ -26,16 +26,6 @@
         .untitled
             font-style: italic
             opacity: 0.5
-        .folder-btn
-            margin-left: 45px
-            margin-top: 0px
-            opacity: 0.7
-            font-size: 35px
-            cursor: pointer
-            position: relative
-            &:hover
-                color: $highlight-color
-                opacity: 1
     .note-controls
         width: 100%
         .font-controls
@@ -58,5 +48,21 @@
         resize: none
         border-radius: 0px 0px 5px 5px
 
-.move-folder
+#move-btn
+    margin-left: 45px
+    opacity: 0.7
+    font-size: 35px
+    cursor: pointer
+    position: relative
+
+.move-btn-dropdown
     @extend .dropdown
+    font-family: $helvetica
+
+.move-btn-selected
+    color: $highlight-color
+    opacity: 1 !important
+
+.move-btn-open
+    .move-btn-dropdown
+        visibility: visible

@@ -35,18 +35,20 @@ $folder-height: 80px
         right: 5px
         &:hover
             opacity: 1
-    &:hover
-        border-style: solid
-        border-color: $highlight-color
-        border-width: $dropdown-selected-border-radius
-        padding: $card-padding - $dropdown-selected-border-radius
-        .edit
-            visibility: visible
-        .folder-items
-            width: 207%
-            margin-top: 3px
+
+.folder-selected
+    border-style: solid
+    border-color: $highlight-color
+    border-width: $dropdown-selected-border-radius
+    padding: $card-padding - $dropdown-selected-border-radius
+    .edit
+        visibility: visible
 
 .folder-items
     @extend .dropdown
     margin-left: -10px
     width: 200%
+
+.folder-open
+    .folder-items
+        visibility: visible

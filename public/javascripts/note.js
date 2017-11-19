@@ -1,7 +1,6 @@
-$(document).ready(function() {
-    var $title = $('#note-title');
-    var $editor = $('#note-title-editor');
-    var $noteData = $('#note-data');
+var $title, $editor, $noteData;
+
+function initTitleEditor() {
     $title.click(function() {
         $title.addClass('hidden');
         $editor.removeClass('hidden');
@@ -47,4 +46,32 @@ $(document).ready(function() {
             }
         });
     });
+}
+
+function openMoveFolders() {
+    if ($(this).hasClass('move-btn-open')) {
+        $(this).removeClass('move-btn-open');
+    } else {
+        $(this).addClass('move-btn-open move-btn-selected');
+    }
+}
+
+function initMoveButton() {
+    $(this).mouseenter(function() {
+        $(this).addClass('move-btn-selected');
+    });
+    $(this).mouseleave(function() {
+        if (!$(this).hasClass('move-btn-open')) {
+            $(this).removeClass('move-btn-selected');
+        }
+    });
+    $(this).click(openMoveFolders);
+}
+
+$(document).ready(function() {
+    $title = $('#note-title');
+    $editor = $('#note-title-editor');
+    $noteData = $('#note-data');
+
+    $('#move-btn').each(initMoveButton);
 });

@@ -10,8 +10,8 @@ block content
         .note-header
             span#note-title(class=(note.name=='Untitled note') && 'untitled')= note.name
             input#note-title-editor.hidden(type='text' value=note.name)
-            .folder-btn.material-icons.md-48 folder
-                .move-folder.hidden
+            #move-btn.folder-btn.material-icons.md-48 folder
+                .move-btn-dropdown
                     table
                         tr.headers
                             td.left Move

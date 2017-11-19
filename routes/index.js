@@ -73,6 +73,10 @@ router.get('/note', requiresLogin, function(req, res, next) {
 	} else if (req.query.id) {
 		Note.findById(req.query.id, function(err, note) {
 			if (err) return res.redirect('/mynotes');
+			// Folder.fromUserId(user._id, function(err, folders) {
+			// 	if (err) return next(err);
+
+			// });
 			Folder.findOne({
 				'notes.id': note._id
 			}, {

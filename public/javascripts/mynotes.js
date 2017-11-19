@@ -1,10 +1,9 @@
 function openFolderItems() { 
-	var $items = $(this).find('.folder-items');
-	if ($items.hasClass('hidden')) {
-		$('.folder-items').addClass('hidden');
-		$items.removeClass('hidden');
+	if ($(this).hasClass('folder-open')) {
+		$(this).removeClass('folder-open');
 	} else {
-		$items.addClass('hidden');
+		$('.folder').removeClass('folder-open folder-selected');
+		$(this).addClass('folder-open folder-selected');
 	}
 }
 
@@ -51,6 +50,14 @@ function openFolderEditor(e) {
 }
 
 function initFolder() {
+	$(this).mouseenter(function() {
+		$(this).addClass('folder-selected');
+	});
+	$(this).mouseleave(function() {
+		if (!$(this).hasClass('folder-open')) {
+			$(this).removeClass('folder-selected');
+		}
+	});
 	$(this).click(openFolderItems);
 	$(this).find('.edit').click(openFolderEditor)
 }
