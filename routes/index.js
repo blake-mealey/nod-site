@@ -61,12 +61,11 @@ router.get('/note', requiresLogin, function(req, res, next) {
 				name: name,
 				id: doc._id
 			};
-			Folder.update({
-				_id: folderId
-			}, {
+			Folder.findByIdAndUpdate(folderId, {
 				$push: { notes: note }
-			}, function(err) {
+			}, function(err, updatedFolder) {
 				if (err) return res.redirect('/mynotes');
+				console.warn(updatedFolder);
 				return res.redirect('/note?id=' + note.id);
 			});
 		});
@@ -79,6 +78,7 @@ router.get('/note', requiresLogin, function(req, res, next) {
 				'notes.$': 1
 			}, function(err, folder) {
 				if (err) return res.redirect('/mynotes');
+				console.warn(folder);
 				var internalNote = folder.notes[0].toObject();
 				internalNote.content = note.content;
 				return res.render('note', {
