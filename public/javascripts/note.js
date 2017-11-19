@@ -83,4 +83,44 @@ $(document).ready(function() {
             console.log(res);
         });
     });
+
+    var recognition;
+    // Setup for voice recognition
+    if (!('webkitSpeechRecognition' in window)) {
+        console.error("Need webkit speech recognition!!");
+    } else {
+        console.warn("HAS SPEECH RECOGNITION!!!");
+
+        // Setup voice recognition. This should NOT be here...
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = false;
+
+        recognition.onresult = function (event) {
+            var interim_transcript = '';
+            var final_transcript = '';
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
+                } else {
+                    interim_transcript += event.results[i][0].transcript;
+                }
+            }
+            console.warn('interim: ' + interim_transcript);
+            console.warn('final: ' + final_transcript);
+            final_transcript = final_transcript.trim();
+            final_transcript = final_transcript.charAt(0).toUpperCase() + final_transcript.slice(1);
+            $('#summary').prepend(final_transcript + '.\n');
+        }
+    };
+
+    $('#record-btn').click(function () {
+        if (recognition) {
+            console.warn("Starting recording!!!");
+            recognition.lang = 'English';
+            recognition.start();
+        } else {
+            console.error("CANT RECORD!!!");
+        }
+    });
 });
