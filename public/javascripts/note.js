@@ -73,8 +73,8 @@ $(document).ready(function() {
     $editor = $('#note-title-editor');
     $noteData = $('#note-data');
 
+    $title.click(initTitleEditor);
     $('#move-btn').each(initMoveButton);
-
     $('.move-folder').click(function() {
         $.post('/notes/move-folder', {
             noteId: $noteData.attr('data-id'),
