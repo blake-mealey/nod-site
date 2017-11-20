@@ -197,6 +197,13 @@ $(document).ready(function() {
         }
         $('#stop-record-btn').addClass('hidden');
         $('#start-record-btn').removeClass('hidden');
+
+        $.post('./note/summerize', {noteid: "some real id we can use"}, function(result) {
+            if (result.ok) {
+                console.warn("Here is the summerized text:");
+                console.warn(result.summary);
+            }
+        });
     });
 
     $('.add-summary-btn').click(function () {
