@@ -27,7 +27,7 @@ block content
                 div#start-record-btn.deactivated.material-icons.md-48 mic
                 div#stop-record-btn.activated.hidden.material-icons.md-48 mic
         div#summary-section.summary-section
-            each sentence in note.sentences
+            for sentence in note.sentences.reverse()
                 .summary-element
                     .add-summary-btn.ready.material-icons.md-48 add_box
                     textarea(readonly).summary-text= sentence

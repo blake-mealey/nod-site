@@ -208,7 +208,7 @@ $(document).ready(function() {
         var newContents = tinymce.activeEditor.getContent({ format: 'raw' });
         if (contents != newContents) {
             contents = newContents;
-            console.log('CONTENT CHANGED!')
+            // console.log('CONTENT CHANGED!')
             $.post('/notes/saveContent', {
                 id: $noteData.attr('data-id'),
                 content: newContents
@@ -216,7 +216,7 @@ $(document).ready(function() {
                 console.log(res);
             });
         } else {
-            console.log('CONTENT UNCHANGED!');
+            // console.log('CONTENT UNCHANGED!');
         }
     }, 5000);
 
