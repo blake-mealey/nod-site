@@ -97,6 +97,7 @@ router.get('/note', requiresLogin, function(req, res, next) {
 
                 var internalNote = folder.notes[0].toObject();
                 internalNote.content = note.content;
+                internalNote.sentences = note.sentences;
                 internalNote.folderId = folder._id;
                 internalNote.folderName = folder.name;
 
@@ -221,7 +222,6 @@ router.post('/users/edit-avatar', upload.single('file'), requiresLogin, function
 router.get('/users/avatar', requiresLogin, function(req, res, next) {
     var user = req.session.user;
     var imagePath = path.resolve(path.join('uploads', user._id));
-    console.log(imagePath);
     if (fs.existsSync(imagePath)) {
         return res.sendFile(imagePath);
     } else {
@@ -286,15 +286,15 @@ router.post('/notes/edit-name', requiresLogin, function(req, res, next) {
 
 router.post('/notes/move-folder', requiresLogin, function(req, res, next) {
     var user = req.session.user;
-    if (req.body.noteId && req.body.folderId) {
+    if (req.body.id && req.body.folderId) {
         Folder.findOne({
             'userId': user._id,				// User can only edit their notes/folders
-            'notes.id': req.body.noteId
+            'notes.id': req.body.id
         }, 'notes.$', function(err, folder) {
             if (err) return res.send({ ok: false, err: err });
             var note = folder.notes[0].toObject();
             folder.update({
-                $pull: { notes: { id: req.body.noteId } }
+                $pull: { notes: { id: req.body.id } }
             }, function(err) {
                 if (err) return res.send({ ok: false, err: err });
                 Folder.update({
@@ -307,6 +307,40 @@ router.post('/notes/move-folder', requiresLogin, function(req, res, next) {
                     return res.send({ ok: true });
                 });
             });
+        });
+    } else {
+        return res.send({ ok: false, err: 'missing_params' });
+    }
+});
+
+router.post('/notes/saveSentence', requiresLogin, function(req, res, next) {
+    var user = req.session.user;
+    if (req.body.id && req.body.sentence) {
+        Note.findOneAndUpdate({
+            // userId: user._id,
+            _id: req.body.id
+        }, {
+            $push: { sentences: req.body.sentence }
+        }, function(err) {
+            if (err) return res.send({ ok: false, err: err });
+            return res.send({ ok: true });
+        });
+    } else {
+        return res.send({ ok: false, err: 'missing_params' });
+    }
+});
+
+router.post('/notes/saveContent', requiresLogin, function(req, res, next) {
+    var user = req.session.user;
+    if (req.body.id && req.body.content) {
+        Note.findOneAndUpdate({
+            // userId: user._id,
+            _id: req.body.id
+        }, {
+            content: req.body.content
+        }, function(err) {
+            if (err) return res.send({ ok: false, err: err });
+            return res.send({ ok: true });
         });
     } else {
         return res.send({ ok: false, err: 'missing_params' });

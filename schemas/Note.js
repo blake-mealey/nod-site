@@ -6,7 +6,8 @@ var NoteSchema = new Schema({
         type: String,
         trim: true,
         default: ''
-    }
+    },
+    sentences: [String]
 });
 
 NoteSchema.statics.fromId = function(id, callback) {

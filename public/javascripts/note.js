@@ -80,7 +80,6 @@ function summarize(sentence) {
 }
 
 function activateSummaryBox(summary) {
-
     $currentSummaryBtn.addClass('ready');
     $currentSummaryText.text(summary);
     $currentSummaryText.removeClass('interim');
@@ -90,6 +89,13 @@ function activateSummaryBox(summary) {
 
     $currentSummaryBtn = null;
     $currentSummaryText = null;
+
+    $.post('/notes/saveSentence', {
+        id: $noteData.attr('data-id'),
+        sentence: summary
+    }, function(res) {
+        console.log(res);
+    });
 }
 
 function makeSummaryBox(summary) {
@@ -192,4 +198,31 @@ $(document).ready(function() {
         $('#stop-record-btn').addClass('hidden');
         $('#start-record-btn').removeClass('hidden');
     });
+
+    $('.add-summary-btn').click(function () {
+        updateTinymceText($(this).parent().find('.summary-text').text());
+    });
+        
+    var contents = $noteData.attr('data-content');
+    window.setInterval(function() {
+        var newContents = tinymce.activeEditor.getContent({ format: 'raw' });
+        if (contents != newContents) {
+            contents = newContents;
+            console.log('CONTENT CHANGED!')
+            $.post('/notes/saveContent', {
+                id: $noteData.attr('data-id'),
+                content: newContents
+            }, function(res) {
+                console.log(res);
+            });
+        } else {
+            console.log('CONTENT UNCHANGED!');
+        }
+    }, 5000);
+
+    // TODO: Fix hack.
+    window.setTimeout(function() {
+        console.log(contents);
+        tinymce.activeEditor.setContent(contents);
+    }, 1000);
 });
