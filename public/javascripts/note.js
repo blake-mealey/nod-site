@@ -198,10 +198,12 @@ $(document).ready(function() {
         $('#stop-record-btn').addClass('hidden');
         $('#start-record-btn').removeClass('hidden');
 
-        $.post('./note/summerize', {noteid: "some real id we can use"}, function(result) {
-            if (result.ok) {
-                console.warn("Here is the summerized text:");
-                console.warn(result.summary);
+        $.post('/notes/summarize', {
+            id: $noteData.attr('data-id')
+        }, function(res) {
+            if (res.ok) {
+                console.warn("Here is the summarized text:");
+                console.warn(res.summary);
             }
         });
     });
