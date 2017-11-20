@@ -1,8 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
 
-var moment = require('moment');
+var fs = require('fs');
+var path = require('path');
 var bcrypt = require('bcrypt');
+var moment = require('moment');
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -192,6 +196,29 @@ router.post('/users/edit', requiresLogin, function(req, res, next) {
         });
     } else {
         return res.redirect('/settings');
+    }
+});
+
+router.post('/users/edit-avatar', upload.single('file'), requiresLogin, function(req, res, next) {
+    var user = req.session.user;
+    if (req.file) {
+        fs.rename(req.file.path, path.join(path.dirname(req.file.path), user._id) /*+ path.extname(req.file.originalname)*/, function(err) {
+            if (err) return res.send({ ok: false, err: err });
+            return res.send({ ok: true });
+        });
+    } else {
+        return res.send({ ok: false, err: 'missing_params' });
+    }
+});
+
+router.get('/users/avatar', requiresLogin, function(req, res, next) {
+    var user = req.session.user;
+    var imagePath = path.resolve(path.join('uploads', user._id));
+    console.log(imagePath);
+    if (fs.existsSync(imagePath)) {
+        return res.sendFile(imagePath);
+    } else {
+        res.sendFile(path.resolve('public/images/default-user.svg'));
     }
 });
 

@@ -5,8 +5,8 @@ block head
     script(type='text/javascript' src='javascripts/settings.js')
 
 block content
-    form#upload-file
-        input#choose-file(type='file')
+    form#choose-file-form(enctype='multipart/form-data')
+        input#choose-file(type='file' name='file')
     .settings
         .profile-picture
             #upload.overlay
