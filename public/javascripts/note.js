@@ -207,7 +207,7 @@ $(document).ready(function() {
     $('#summarize-btn').click(function () {
         if (waitingForResponse) return;
         waitingForResponse = true;
-        $('#summarize-btn').removeClass('clickable');
+        $('#summarize-btn').addClass('not-clickable');
         $.post('/notes/summarize', {
             id: $noteData.attr('data-id')
         }, function(res) {
@@ -217,7 +217,7 @@ $(document).ready(function() {
             } else {
                 alert("Summary failed. Please record more sentences and try again.")
             }
-            $('#summarize-btn').addClass('clickable');
+            $('#summarize-btn').removeClass('not-clickable');
             waitingForResponse = false;
         });
     });
