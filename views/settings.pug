@@ -9,8 +9,8 @@ block content
         input#choose-file(type='file')
     .settings
         .profile-picture
-            .overlay
-                #upload.material-icons.md-48 file_upload
+            #upload.overlay
+                span.material-icons.md-48 file_upload
         h3.email= email
         form#edit-user(action='/users/edit', method='post')
             input#change-email(type='text' placeholder='change email' name='email').changeEmail
