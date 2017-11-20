@@ -2,6 +2,28 @@ extends layout
 
 block header
     .topbar
+        table.nav
+            tr
+                td
+                    span.nod
+                        img(src='images/logo-dark.svg')
+                td
+                    a(href='/mynotes') My Notes
+                td
+                    a(href='/note?new=true') New Note
+        .username
+            span.email(href='/settings')= email
+            span.avatar
+                .profile-picture
+            .user-dropdown
+                table
+                    tr
+                        td.left
+                            a(href='/settings') Settings
+                    tr
+                        td.left
+                            a(href='/users/logout') Logout
+    //- .topbar
         span.nod
             img(src='images/logo-dark.svg')
         a(href='/mynotes') My Notes

@@ -1,27 +1,31 @@
 .topbar
-	display: table
-	border-spacing: 10px
-	border-collapse: separate
+	padding-top: 5px
 	height: 100px
 	width: 100%
 	background-color: $foreground-color
 	+box-shadow(0px 1px 2px 0px rgba(0,0,0,0.52))
 	margin-bottom: 30px
-	.nod
-		padding-left: 10px
-		+vertical-align()
-	a
-		+vertical-align()
-		text-decoration: none
-		font-size: 20px
-		color: #000
+	.nav
+		display: inline
+		.nod
+			padding-left: 10px
+			vertical-align: middle
+		a
+			margin-left: 100px
+			text-decoration: none
+			font-size: 20px
+			color: #000
+			&:hover
+				color: $highlight-color
 	.username
 		cursor: pointer
 		float: right
-		display: table
 		height: 100%
-		margin-right: 10px
+		margin-right: 20px
+		position: relative
+		display: table
 		.email
+			padding-right: 10px
 			+vertical-align()
 			font-size: 20px
 		.avatar
@@ -38,5 +42,5 @@
 
 .user-dropdown
 	@extend .dropdown
-	top: 80px
-	right: 30px
+	top: 70px
+	right: 0px
