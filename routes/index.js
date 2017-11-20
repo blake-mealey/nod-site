@@ -55,6 +55,7 @@ router.get('/mynotes', requiresLogin, function(req, res, next) {
     Folder.fromUserId(user._id, function(err, folders) {
         if (err) return next(err);
         return res.render('mynotes', {
+            theme: user.theme,
             email: user.email,
             folders: folders,
             moment: moment
@@ -120,6 +121,7 @@ router.get('/note', requiresLogin, function(req, res, next) {
                     }
 
                     return res.render('note', {
+                        theme: user.theme,
                         email: user.email,
                         note: internalNote,
                         folders: folders
@@ -161,6 +163,7 @@ router.post('/notes/summarize', requiresLogin, enableSmmryCors, function (req, r
 router.get('/settings', requiresLogin, function(req, res, next) {
     var user = req.session.user;
     return res.render('settings', {
+        theme: user.theme,
         email: user.email
     });
 });

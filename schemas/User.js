@@ -19,6 +19,11 @@ var UserSchema = new Schema({
     },
     defaultFolderId: {
         type: Schema.Types.ObjectId
+    },
+    theme: {
+        type: String,
+        trim: true,
+        default: 'light'
     }
 });
 

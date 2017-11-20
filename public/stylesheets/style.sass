@@ -9,8 +9,6 @@ body
     background-color: $background-color
     padding: 0
     margin: 0
-a
-    color: #00B7FF
 
 $button-padding-top: 8px
 $button-padding-sides: 20px
@@ -37,10 +35,14 @@ $button-padding-sides: 20px
 
 input[type=text],[type=password]
     padding: 7px
+    background-color: $foreground-color
+    color: $font-color
+    border: solid 1px
+    border-color: rgba($font-color, .5)
 
 .profile-picture
     +circle(30px)
-    border-color: darken($background-color, 10)
+    border-color: rgba($font-color, 0.1)
     border-width: 2px
     border-style: solid
     background-color: $foreground-color
