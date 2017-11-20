@@ -16,20 +16,27 @@
 		font-size: 20px
 		color: #000
 	.username
+		cursor: pointer
 		float: right
 		display: table
 		height: 100%
 		margin-right: 10px
-		a
+		.email
 			+vertical-align()
-			font-size: 15px
+			font-size: 20px
 		.avatar
 			+vertical-align()
-			img
-				width: 30px
-				height: 30px
-				border-color: $background-color
-				border-width: 2px
-				border-radius: 30px
-				border-style: solid
-				background-color: $foreground-color
+
+.username-selected
+	color: $highlight-color
+	.profile-picture
+		border-color: $highlight-color
+
+.username-open
+	.user-dropdown
+		visibility: visible
+
+.user-dropdown
+	@extend .dropdown
+	top: 80px
+	right: 30px

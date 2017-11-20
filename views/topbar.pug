@@ -2,11 +2,19 @@ extends layout
 
 block header
     .topbar
-        a.nod(href='/')
+        span.nod
             img(src='images/logo-dark.svg')
         a(href='/mynotes') My Notes
         a(href='/note?new=true') New Note
         .username
-            a(href='/settings')= email
+            span.email(href='/settings')= email
             span.avatar
-                img
+                .profile-picture
+            .user-dropdown
+                table
+                    tr
+                        td.left
+                            a(href='/settings') Settings
+                    tr
+                        td.left
+                            a(href='/users/logout') Logout

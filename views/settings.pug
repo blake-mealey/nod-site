@@ -1,4 +1,18 @@
 extends topbar
 
+block head
+    link(rel='stylesheet', href='/stylesheets/settings.css')
+    script(type='text/javascript' src='javascripts/settings.js')
+
 block content
-    h1 Account Settings
+    form#upload-file
+        input#choose-file(type='file')
+    .settings
+        .profile-picture
+            .overlay
+                #upload.material-icons.md-48 file_upload
+        h3.email= email
+        form#edit-user(action='/users/edit', method='post')
+            input#change-email(type='text' placeholder='change email' name='email').changeEmail
+            input#change-password(type='password' placeholder='change password' name='password').changePassword
+            a.button-highlight(href='javascript:{}' onclick="document.getElementById('edit-user').submit(); return false;") Save

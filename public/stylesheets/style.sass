@@ -1,6 +1,7 @@
 @import 'mixins'
 @import 'colors'
 @import 'fonts'
+@import 'elements'
 
 @import 'topbar'
 
@@ -35,5 +36,15 @@ $button-padding-sides: 20px
     visibility: hidden
 
 input[type=text],[type=password]
-    padding: 5px
+    padding: 7px
 
+.profile-picture
+    +circle(30px)
+    border-color: darken($background-color, 10)
+    border-width: 2px
+    border-style: solid
+    background-color: $foreground-color
+    background-image: url('/images/default-user.svg')
+    background-repeat: no-repeat
+    background-position: center
+    background-size: 100% 100%

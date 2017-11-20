@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var moment = require('moment');
+var bcrypt = require('bcrypt');
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -161,6 +162,8 @@ router.post('/users/new', function(req, res, next) {
                 });
             });
         });
+    } else {
+        return res.redirect('/signup');
     }
 });
 
@@ -171,6 +174,24 @@ router.get('/users/logout', function(req, res, next) {
             if (err) return next(err);
             return res.redirect('/');
         });
+    } else {
+        return res.redirect('/');
+    }
+});
+
+router.post('/users/edit', requiresLogin, function(req, res, next) {
+    var user = req.session.user;
+    if (req.body.email || req.body.password) {
+        var updates = {};
+        if (req.body.email) updates.email = req.body.email;
+        if (req.body.password) updates.password = bcrypt.hashSync(req.body.password, 10);
+        User.findByIdAndUpdate(user._id, updates, function(err) {
+            if (err) return next(err);
+            if (req.body.email) user.email = req.body.email;
+            return res.redirect('/settings');
+        });
+    } else {
+        return res.redirect('/settings');
     }
 });
 
