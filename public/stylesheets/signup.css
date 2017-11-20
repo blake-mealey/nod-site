@@ -1,0 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+body {
+  font-family: "Helvetica", sans-serif; }
+
+.signup-header {
+  text-align: center;
+  display: table;
+  width: 100%;
+  margin-top: 200px; }
+  .signup-header h1 {
+    font-family: "Slabo 27px", serif;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    padding: 80px; }
+
+.signup-box {
+  width: 200px;
+  margin: auto;
+  text-align: center; }
+  .signup-box * {
+    margin-bottom: 10px;
+    width: calc(100% - 14px); }
+
+.signup-button {
+  margin: auto;
+  text-align: center;
+  padding: 40px; }
+
+/*# sourceMappingURL=signup.css.map */

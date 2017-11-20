@@ -5,7 +5,8 @@ block head
 
 block header
     .signup-header
-        h1 Sign up for Free
+        img#logo(src='images/logo-dark.svg' alt='NOD Logo' algin='middle')
+        h1 Sign up for free.
 
 block content
     form#newuser(action='/users/new' method='post')
@@ -15,3 +16,6 @@ block content
             input.text-field(type='password' placeholder='confirm password' name='confirmedPassword')
         .signup-button
             a.button(href='javascript:{}' onclick="document.getElementById('newuser').submit(); return false;") Sign up
+        .footer
+            body Already have an account? 
+            a#login(href='/') Log in
