@@ -30,6 +30,13 @@ function requiresLogin(req, res, next) {
     return res.render('require-login');
 }
 
+// Middleware function to enable cors for SMMRY
+function enableSmmryCors(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://api.smmry.com');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+}
+
 /* GET request for splash/login page */
 router.get('/', function(req, res, next) {
     // TODO: Redirect to mynotes if signed in
