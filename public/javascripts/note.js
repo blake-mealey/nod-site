@@ -68,6 +68,41 @@ function initMoveButton() {
     $(this).click(openMoveFolders);
 }
 
+function updateTinymceText(summary) {
+    tinymce.activeEditor.execCommand('mceInsertContent', false, summary);
+}
+
+function summarize(sentence) {
+    sentence = sentence.trim();
+    sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1) + '.';
+    return sentence;
+}
+
+function makeSummaryBox(summary) {
+    var $summaryElement = $('<div>', {
+        class: 'summary-element'
+    });
+
+    var $summaryBtn = $('<div>', {
+        class: 'add-summary-btn material-icons md-48',
+        text: 'add_box'
+    });
+
+    var $summaryText = $('<textarea>', {
+        attribute: 'readonly',
+        class: 'summary-text',
+        text: summary
+    });
+
+    $summaryBtn.click(function() {
+        updateTinymceText($(this).parent().find('.summary-text').text());
+    });
+
+    $summaryElement.append($summaryBtn);
+    $summaryElement.append($summaryText);
+    return $summaryElement;
+}
+
 $(document).ready(function() {
     $title = $('#note-title');
     $editor = $('#note-title-editor');
@@ -85,6 +120,7 @@ $(document).ready(function() {
     });
 
     var recognition;
+    var recordingActivated = false;
     // Setup for voice recognition
     if (!('webkitSpeechRecognition' in window)) {
         console.error("Need webkit speech recognition!!");
@@ -107,16 +143,23 @@ $(document).ready(function() {
                     interim_transcript += event.results[i][0].transcript;
                 }
             }
-            console.warn('interim: ' + interim_transcript);
-            console.warn('final: ' + final_transcript);
-            final_transcript = final_transcript.trim();
-            final_transcript = final_transcript.charAt(0).toUpperCase() + final_transcript.slice(1);
-            $('#summary').prepend(final_transcript + '.\n');
+            final_transcript = summarize(final_transcript);
+            var $summaryElement = makeSummaryBox(final_transcript);
+            $('#summary-section').prepend($summaryElement);
+        }
+
+        recognition.onend = function () {
+            console.warn('Speech recognition service disconnected');
+            if (recordingActivated) {
+                recognition.start();
+                console.warn("Restarted");
+            }
         }
     };
 
     $('#start-record-btn').click(function () {
         if (recognition) {
+            recordingActivated = true;
             recognition.start();
         }
         $('#start-record-btn').addClass('hidden');
@@ -125,6 +168,7 @@ $(document).ready(function() {
 
     $('#stop-record-btn').click(function () {
         if (recognition) {
+            recordingActivated = false;
             recognition.stop();
         }
         $('#stop-record-btn').addClass('hidden');
