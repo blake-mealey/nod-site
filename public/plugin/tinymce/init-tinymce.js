@@ -10,5 +10,8 @@ tinymce.init({
     menubar: '',
     branding: false,
     elementpath: false,
-    custom_ui_selector: '.summary-section'
+    custom_ui_selector: '.summary-section',
+    force_br_newlines: true,
+    force_p_newlines: false,
+    forced_root_block: ''
 });

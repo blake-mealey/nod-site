@@ -69,6 +69,7 @@ function initMoveButton() {
 }
 
 function updateTinymceText(summary) {
+    summary = " " + summary + '<br>\n</br>';
     tinymce.activeEditor.execCommand('mceInsertContent', false, summary);
 }
 
@@ -89,10 +90,10 @@ function makeSummaryBox(summary) {
     });
 
     var $summaryText = $('<textarea>', {
-        attribute: 'readonly',
         class: 'summary-text',
         text: summary
     });
+    $summaryText.prop('readonly', true);
 
     $summaryBtn.click(function() {
         updateTinymceText($(this).parent().find('.summary-text').text());
