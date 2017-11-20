@@ -77,12 +77,8 @@ function makeFolder(name) {
 		text: name
 	});
 
-	var $edit = $('<button>', {
-		class: 'edit mdl-button mdl-js-button mdl-button--icon'
-	});
-
-	var $icon = $('<i>', {
-		class: 'material-icons',
+	var $edit = $('<span>', {
+		class: 'edit material-icons md-48',
 		text: 'mode_edit'
 	});
 
@@ -113,8 +109,6 @@ function makeFolder(name) {
 	$tbody.append($headers);
 	$table.append($tbody);
 	$items.append($table);
-
-	$edit.append($icon);
 
 	$folder.append($name, $editor, $edit, $items);
 	return $folder;
