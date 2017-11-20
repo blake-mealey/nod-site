@@ -197,21 +197,31 @@ $(document).ready(function() {
         }
         $('#stop-record-btn').addClass('hidden');
         $('#start-record-btn').removeClass('hidden');
-
-        $.post('/notes/summarize', {
-            id: $noteData.attr('data-id')
-        }, function(res) {
-            if (res.ok) {
-                console.warn("Here is the summarized text:");
-                console.warn(res.summary);
-            }
-        });
     });
 
     $('.add-summary-btn').click(function () {
         updateTinymceText($(this).parent().find('.summary-text').text());
     });
-        
+    
+    var waitingForResponse = false;
+    $('#summarize-btn').click(function () {
+        if (waitingForResponse) return;
+        waitingForResponse = true;
+        $('#summarize-btn').removeClass('clickable');
+        $.post('/notes/summarize', {
+            id: $noteData.attr('data-id')
+        }, function(res) {
+            if (res.ok) {
+                console.warn(res.summary);
+                updateTinymceText(res.summary);
+            } else {
+                alert("Summary failed. Please record more sentences and try again.")
+            }
+            $('#summarize-btn').addClass('clickable');
+            waitingForResponse = false;
+        });
+    });
+
     var contents = $noteData.attr('data-content');
     window.setInterval(function() {
         var newContents = tinymce.activeEditor.getContent({ format: 'raw' });

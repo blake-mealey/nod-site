@@ -29,7 +29,24 @@
 
     .record-controls
         width: 100%
-        label
+        .summarize-section
+            float: left
+            .summarize-btn
+                float: left
+                margin-top: -10px
+                margin-left: 45px
+                margin-right: 5px
+                color: #999
+                cursor: pointer
+                font-size: 35px
+            .clickable
+                color: #666
+                &:hover
+                    color: $highlight-color
+            .summarize-text
+                float: right
+
+        .record-label
             float: right
             .deactivated
                 margin-top: -15px

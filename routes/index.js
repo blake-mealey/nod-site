@@ -135,7 +135,7 @@ router.get('/note', requiresLogin, function(req, res, next) {
 router.get('/sentences/:noteId', function(req, res, next) {
     Note.findById(req.params.noteId, function(err, note) {
         if (err) return next(err);
-        var text = note.sentences.join(' ');
+        var text = note.sentences.join(' '); // The actual method
         var text = "A news article discusses current or recent news of either general interest (i.e. daily newspapers) or of a specific topic (i.e. political or trade news magazines, club newsletters, or technology news websites).A news article can include accounts of eyewitnesses to the happening event. It can contain photographs, accounts, statistics, graphs, recollections, interviews, polls, debates on the topic, etc. Headlines can be used to focus the reader’s attention on a particular (or main) part of the article. The writer can also give facts and detailed information following answers to general questions like who, what, when, where, why and how.Quoted references can also be helpful. References to people can also be made through the written accounts of interviews and debates confirming the factuality of the writer’s information and the reliability of his source. The writer can use redirection to ensure that the reader keeps reading the article and to draw her attention to other articles. For example, phrases like Continued on page 3 redirect the reader to a page where the article is continued.While a good conclusion is an important ingredient for newspaper articles, the immediacy of a deadline environment means that copy editing often takes the form of deleting everything past an arbitrary point in the story corresponding to the dictates of available space on a page. Therefore, newspaper reporters are trained to write in inverted pyramid style, with all the most important information in the first paragraph or two. If the less vital details are pushed towards the end of the story, then the potentially destructive impact of draconian copy editing will be minimized."
         var html = '<!DOCTYPE html><html><head><title>Note Contents</title></head><body><p>' + text + '</p></body></html>';
         return res.send(html);
@@ -148,8 +148,9 @@ router.post('/notes/summarize', requiresLogin, enableSmmryCors, function (req, r
         var url = 'http://api.smmry.com/&SM_API_KEY=944CDDA147&SM_LENGTH=5&SM_URL=' + fileUrl;
         request(url, function(err, response) {
             console.log(response.body)
-            if (err) return res.send({ ok: false, err: err });
-            return res.send({ ok: true, summary: response.body });
+            var parsedReply = JSON.parse(response.body);
+            if (err || parsedReply.sm_api_error) return res.send({ ok: false, err: err });
+            return res.send({ ok: true, summary: parsedReply.sm_api_content });
         });
     } else {
         return res.send({ ok: false, err: 'missing_params' });
