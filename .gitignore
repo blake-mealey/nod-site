@@ -58,6 +58,8 @@ typings/
 .env
 
 
+uploads/*
+
 
 *.css
 *.css.map

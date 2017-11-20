@@ -1,7 +1,11 @@
 extends layout
 
 block head
+	link(rel='stylesheet', href='/stylesheets/require-login.css')
 
 block content
-    span You must be logged in to access this content.
-    a(href='/')  Log in
+	.image
+		img(src='images/logo-dark.svg' alt='NOD Logo' align='middle')
+	.requirestext
+		span You must be logged in to access this content. 
+		a(href='/') Log in

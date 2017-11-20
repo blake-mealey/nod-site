@@ -1,4 +1,4 @@
-var $title, $editor, $noteData;
+var $title, $editor, $noteData, $currentSummaryText, $currentSummaryBtn;
 
 function initTitleEditor() {
     $title.click(function() {
@@ -79,28 +79,43 @@ function summarize(sentence) {
     return sentence;
 }
 
+function activateSummaryBox(summary) {
+    $currentSummaryBtn.addClass('ready');
+    $currentSummaryText.text(summary);
+    $currentSummaryText.removeClass('interim');
+    $currentSummaryBtn.click(function () {
+        updateTinymceText($(this).parent().find('.summary-text').text());
+    });
+
+    $currentSummaryBtn = null;
+    $currentSummaryText = null;
+
+    $.post('/notes/saveSentence', {
+        id: $noteData.attr('data-id'),
+        sentence: summary
+    }, function(res) {
+        console.log(res);
+    });
+}
+
 function makeSummaryBox(summary) {
     var $summaryElement = $('<div>', {
         class: 'summary-element'
     });
 
-    var $summaryBtn = $('<div>', {
+    $currentSummaryBtn = $('<div>', {
         class: 'add-summary-btn material-icons md-48',
         text: 'add_box'
     });
 
-    var $summaryText = $('<textarea>', {
-        class: 'summary-text',
+    $currentSummaryText = $('<textarea>', {
+        class: 'summary-text interim',
         text: summary
     });
-    $summaryText.prop('readonly', true);
+    $currentSummaryText.prop('readonly', true);
 
-    $summaryBtn.click(function() {
-        updateTinymceText($(this).parent().find('.summary-text').text());
-    });
-
-    $summaryElement.append($summaryBtn);
-    $summaryElement.append($summaryText);
+    $summaryElement.append($currentSummaryBtn);
+    $summaryElement.append($currentSummaryText);
     return $summaryElement;
 }
 
@@ -131,22 +146,30 @@ $(document).ready(function() {
         // Setup voice recognition. This should NOT be here...
         recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
-        recognition.interimResults = false;
+        recognition.interimResults = true;
         recognition.lang = 'English';
 
         recognition.onresult = function (event) {
-            var interim_transcript = '';
-            var final_transcript = '';
+            var interimTranscript = '';
+            var finalTranscript = '';
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
+                    finalTranscript += event.results[i][0].transcript;
                 } else {
-                    interim_transcript += event.results[i][0].transcript;
+                    interimTranscript += event.results[i][0].transcript;
+                    
                 }
             }
-            final_transcript = summarize(final_transcript);
-            var $summaryElement = makeSummaryBox(final_transcript);
-            $('#summary-section').prepend($summaryElement);
+            if (interimTranscript.length > 0) {
+                if (!$currentSummaryText) {
+                    var $summaryElement = makeSummaryBox("");
+                    $('#summary-section').prepend($summaryElement);
+                }
+                $currentSummaryText.text(interimTranscript);
+            } else if (finalTranscript.length > 0) {
+                var finalSummary = summarize(finalTranscript);
+                activateSummaryBox(finalSummary);
+            }
         }
 
         recognition.onend = function () {
@@ -174,5 +197,41 @@ $(document).ready(function() {
         }
         $('#stop-record-btn').addClass('hidden');
         $('#start-record-btn').removeClass('hidden');
+
+        $.post('/notes/summarize', {
+            id: $noteData.attr('data-id')
+        }, function(res) {
+            if (res.ok) {
+                console.warn("Here is the summarized text:");
+                console.warn(res.summary);
+            }
+        });
     });
+
+    $('.add-summary-btn').click(function () {
+        updateTinymceText($(this).parent().find('.summary-text').text());
+    });
+        
+    var contents = $noteData.attr('data-content');
+    window.setInterval(function() {
+        var newContents = tinymce.activeEditor.getContent({ format: 'raw' });
+        if (contents != newContents) {
+            contents = newContents;
+            // console.log('CONTENT CHANGED!')
+            $.post('/notes/saveContent', {
+                id: $noteData.attr('data-id'),
+                content: newContents
+            }, function(res) {
+                console.log(res);
+            });
+        } else {
+            // console.log('CONTENT UNCHANGED!');
+        }
+    }, 5000);
+
+    // TODO: Fix hack.
+    window.setTimeout(function() {
+        console.log(contents);
+        tinymce.activeEditor.setContent(contents);
+    }, 1000);
 });
