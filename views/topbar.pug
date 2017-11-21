@@ -6,10 +6,7 @@ block header
             tr
                 td
                     span.nod
-                        if (theme == 'light')
-                            img(src='images/logo-dark.svg')
-                        else if (theme == 'dark')
-                            img(src='images/logo-light.svg')
+                        img(src='images/logo-' + theme + '.svg')
                 td
                     a(href='/mynotes') My Notes
                 td
@@ -18,6 +15,7 @@ block header
             span.email(href='/settings')= email
             span.avatar
                 .profile-picture
+                    .picture
             .user-dropdown
                 table
                     tr

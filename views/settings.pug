@@ -1,7 +1,6 @@
 extends topbar
 
 block head
-    link(rel='stylesheet', href='/stylesheets/settings.css')
     script(type='text/javascript' src='javascripts/settings.js')
 
 block content
@@ -9,10 +8,25 @@ block content
         input#choose-file(type='file' name='file')
     .settings
         .profile-picture
+            .picture
             #upload.overlay
                 span.material-icons.md-48 file_upload
         h3.email= email
         form#edit-user(action='/users/edit', method='post')
+            #theme
+                select#theme-select.hidden(name='theme' value=theme)
+                    option(value='light') Light
+                    option(value='dark') Dark
+                a#theme-btn.button-highlight= theme[0].toUpperCase() + theme.slice(1) + ' Theme'
+                #theme-dropdown.dropdown.hidden
+                    table
+                        tr
+                            td.left
+                                a(data-value='light') Light
+                        tr
+                            td.left
+                                a(data-value='dark') Dark
+
             input#change-email(type='text' placeholder='change email' name='email').changeEmail
             input#change-password(type='password' placeholder='change password' name='password').changePassword
             a.button-highlight(href='javascript:{}' onclick="document.getElementById('edit-user').submit(); return false;") Save

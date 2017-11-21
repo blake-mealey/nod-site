@@ -14,4 +14,19 @@ $(document).ready(function() {
             processData: false
         });
     });
+
+    $('#theme-btn').click(function() {
+        $dropdown = $('#theme-dropdown');
+        if ($dropdown.hasClass('hidden')) {
+            $dropdown.removeClass('hidden');
+        } else {
+            $dropdown.addClass('hidden');
+        }
+    });
+
+    $('#theme-dropdown a').click(function() {
+        $('#theme-dropdown').addClass('hidden');
+        $('#theme-btn').text($(this).text() + ' Theme');
+        $('#theme-select').val($(this).attr('data-value')).change();
+    });
 });

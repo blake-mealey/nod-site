@@ -222,13 +222,15 @@ router.get('/users/logout', function(req, res, next) {
 
 router.post('/users/edit', requiresLogin, function(req, res, next) {
     var user = req.session.user;
-    if (req.body.email || req.body.password) {
+    if (req.body.email || req.body.password || req.body.theme) {
         var updates = {};
         if (req.body.email) updates.email = req.body.email;
         if (req.body.password) updates.password = bcrypt.hashSync(req.body.password, 10);
+        if (req.body.theme) updates.theme = req.body.theme;
         User.findByIdAndUpdate(user._id, updates, function(err) {
             if (err) return next(err);
             if (req.body.email) user.email = req.body.email;
+            if (req.body.theme) user.theme = req.body.theme;
             return res.redirect('/settings');
         });
     } else {
