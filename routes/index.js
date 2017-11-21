@@ -366,7 +366,14 @@ router.post('/notes/saveSentence', requiresLogin, function(req, res, next) {
             $push: { sentences: req.body.sentence }
         }, function(err) {
             if (err) return res.send({ ok: false, err: err });
-            return res.send({ ok: true });
+            Folder.findOneAndUpdate({
+                'notes.id': req.body.id
+            }, {
+                $set: { 'notes.$.modified': Date.now() }
+            }, function(err) {
+                if (err) return res.send({ ok: false, err: err });
+                return res.send({ ok: true });
+            });
         });
     } else {
         return res.send({ ok: false, err: 'missing_params' });
@@ -383,7 +390,14 @@ router.post('/notes/saveContent', requiresLogin, function(req, res, next) {
             content: req.body.content
         }, function(err) {
             if (err) return res.send({ ok: false, err: err });
-            return res.send({ ok: true });
+            Folder.findOneAndUpdate({
+                'notes.id': req.body.id
+            }, {
+                $set: { 'notes.$.modified': Date.now() }
+            }, function(err) {
+                if (err) return res.send({ ok: false, err: err });
+                return res.send({ ok: true });
+            });
         });
     } else {
         return res.send({ ok: false, err: 'missing_params' });
