@@ -41,12 +41,16 @@ function enableSmmryCors(req, res, next) {
 /* GET request for splash/login page */
 router.get('/', function(req, res, next) {
     // TODO: Redirect to mynotes if signed in
-    res.render('splash', {});
+    res.render('splash', {
+        theme: 'light'
+    });
 });
 
 /* GET request for Sign Up page */
 router.get('/signup', function(req, res, next) {
-    res.render('signup', {});
+    res.render('signup', {
+        theme: 'light'
+    });
 });
 
 /* GET request for My Notes page */
