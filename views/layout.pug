@@ -2,6 +2,7 @@ doctype html
 html
     head
         title= title
+        span#current-theme(data-theme=theme)
         script(type='text/javascript' src='javascripts/jquery-3.2.1.min.js')
         script(type='text/javascript' src='javascripts/topbar.js')
         link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
@@ -9,7 +10,6 @@ html
         script(defer src='https://code.getmdl.io/1.3.0/material.min.js')
 
         link(rel='stylesheet', href='/stylesheets/style-' + theme + '.css')
-
         block head
     body
         block header

@@ -1,7 +1,9 @@
+
+
 tinymce.init({
     selector: 'textarea.tinymce',
     theme: 'modern',
-    skin: 'custom',
+    skin: $('#current-theme').attr('data-theme'),
     height: '500px',
     plugins: ["advlist autolink link image lists charmap print preview hr anchor pagebreak",
     "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
