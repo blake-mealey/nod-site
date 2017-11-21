@@ -28,7 +28,9 @@ db.once('open', function() {		// Test DB connection
 // Renders 'require-login' if not logged in
 function requiresLogin(req, res, next) {
     if (req.session && req.session.user) return next();
-    return res.render('require-login');
+    return res.render('require-login', {
+        theme: 'light'
+    });
 }
 
 // Middleware function to enable cors for SMMRY
