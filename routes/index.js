@@ -182,27 +182,33 @@ router.post('/users/login', function(req, res, next) {
             req.session.user = user;
             return res.redirect('/mynotes');
         });
+    } else {
+        return next(new Error('missing_params'));
     }
 });
 
 /* POST request to create a new user */
 router.post('/users/new', function(req, res, next) {
-    if (req.body.email && req.body.password && req.body.confirmedPassword && req.body.password === req.body.confirmedPassword) {
+    if (req.body.email && req.body.password && req.body.confirmedPassword) {
+        if (req.body.password !== req.body.confirmedPassword) {
+            return next(new Error('passwords_mismatch'));
+        }
         User.create({
             email: req.body.email,
             password: req.body.password
         }, function(err, user) {
+            if (err) return next(err);
             Folder.create({
                 name: "Default Folder",
                 userId: user._id,
                 notes: []
             }, function (err, folder) {
-                if (err) return err;
+                if (err) return next(err);
                 User.findByIdAndUpdate(user._id,
                     {
                         defaultFolderId: folder._id
                     }, function (err, updatedUser) {
-                        if (err) return err;
+                        if (err) return next(err);
                         req.session.user = updatedUser;
                         req.session.user.defaultFolderId = folder._id;
                         return res.redirect('/mynotes');
@@ -210,7 +216,7 @@ router.post('/users/new', function(req, res, next) {
             });
         });
     } else {
-        return res.redirect('/signup');
+        return next(new Error('missing_params'));
     }
 });
 
