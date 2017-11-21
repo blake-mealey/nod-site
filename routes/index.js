@@ -315,15 +315,15 @@ router.post('/notes/edit-name', requiresLogin, function(req, res, next) {
 
 router.post('/notes/move-folder', requiresLogin, function(req, res, next) {
     var user = req.session.user;
-    if (req.body.id && req.body.folderId) {
+    if (req.body.noteId && req.body.folderId) {
         Folder.findOne({
             'userId': user._id,				// User can only edit their notes/folders
-            'notes.id': req.body.id
+            'notes.id': req.body.noteId
         }, 'notes.$', function(err, folder) {
             if (err) return res.send({ ok: false, err: err });
             var note = folder.notes[0].toObject();
             folder.update({
-                $pull: { notes: { id: req.body.id } }
+                $pull: { notes: { id: req.body.noteId } }
             }, function(err) {
                 if (err) return res.send({ ok: false, err: err });
                 Folder.update({
