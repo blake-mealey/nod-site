@@ -29,4 +29,6 @@ $(document).ready(function() {
         $('#theme-btn').text($(this).text() + ' Theme');
         $('#theme-select').val($(this).attr('data-value')).change();
     });
+
+    $('#theme-select').val($('#theme-select').value()).change();
 });

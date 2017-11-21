@@ -14,9 +14,9 @@ block content
         h3.email= email
         form#edit-user(action='/users/edit', method='post')
             #theme
-                select#theme-select.hidden(name='theme' value=theme)
-                    option(value='light') Light
-                    option(value='dark') Dark
+                select#theme-select.hidden(name='theme')
+                    option(value='light' selected=(theme=='light')) Light
+                    option(value='dark' selected=(theme=='dark')) Dark
                 a#theme-btn.button-highlight= theme[0].toUpperCase() + theme.slice(1) + ' Theme'
                 #theme-dropdown.dropdown.hidden
                     table
