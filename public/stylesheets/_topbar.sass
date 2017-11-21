@@ -1,45 +1,45 @@
 .topbar
-	padding-top: 5px
-	height: 100px
-	width: 100%
-	background-color: $foreground-color
-	+box-shadow(0px 1px 2px 0px rgba(0,0,0,0.52))
-	margin-bottom: 30px
-	.nav
-		display: inline
-		.nod
-			padding-left: 10px
-			vertical-align: middle
-		a
-			margin-left: 100px
-			text-decoration: none
-			font-size: 20px
-			&:hover
-				color: $highlight-color
-	.username
-		cursor: pointer
-		float: right
-		height: 100%
-		margin-right: 20px
-		position: relative
-		display: table
-		.email
-			padding-right: 10px
-			+vertical-align()
-			font-size: 20px
-		.avatar
-			+vertical-align()
+    padding-top: 5px
+    height: 100px
+    width: 100%
+    background-color: $foreground-color
+    +box-shadow(0px 1px 2px 0px rgba(0,0,0,0.52))
+    margin-bottom: 30px
+    .nav
+        display: inline
+        .nod
+            padding-left: 10px
+            vertical-align: middle
+        a
+            margin-left: 100px
+            text-decoration: none
+            font-size: 20px
+            &:hover
+                color: $highlight-color
+    .username
+        cursor: pointer
+        float: right
+        height: 100%
+        margin-right: 20px
+        position: relative
+        display: table
+        .email
+            padding-right: 10px
+            +vertical-align()
+            font-size: 20px
+        .avatar
+            +vertical-align()
 
 .username-selected
-	color: $highlight-color
-	.profile-picture
-		border-color: $highlight-color
+    color: $highlight-color
+    .profile-picture
+        border-color: $highlight-color
 
 .username-open
-	.user-dropdown
-		visibility: visible
+    .user-dropdown
+        visibility: visible
 
 .user-dropdown
-	@extend .dropdown
-	top: 70px
-	right: 0px
+    @extend .dropdown
+    top: 70px
+    right: 0px
